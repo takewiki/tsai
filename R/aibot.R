@@ -127,7 +127,23 @@ ai<- function(keyword,n=3,low=0.6,high=0.9,detail=FALSE){
   res=list(type,answ)
   names(res) =c('type','answ')
   return(res)
-  }
+}
+
+#' 增加提示问题
+#'
+#' @param keyword 关键词
+#' @param n count
+#'
+#' @return vect of the question
+#' @export
+#'
+#' @examples
+#' ai_tip
+ai_tip <- function(keyword,n=3){
+  res <- aibot(keyword,n)
+  res <- res$FQues
+  return(res)
+}
 
 
 
