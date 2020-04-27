@@ -148,6 +148,46 @@ ai_tip <- function(keyword,n=3){
 
 
 
+#' 处理结果
+#'
+#' @param keyword 关键词
+#' @param n 返回数
+#' @param low  最小值
+#' @param high  最大值
+#' @param detail 是否显示明细
+#'
+#' @return 返回列表
+#' @export
+#'
+#' @examples
+#' ai2()
+ai2<- function(keyword,n=3,low=0.6,high=0.9,detail=TRUE){
+  aibot_res <- aibot(keyword,n)
+  type <- aibot_answer_type(aibot_res,min = low,high = high)
+
+  if(detail){
+
+      answ =aibot_res
+      print(nrow(answ))
+      answ$FIndex <-1:nrow(answ)
+
+
+  }else{
+    if(type =='A'){
+      answ = aibot_res$FAnsw[1]
+    }else if(type=='B'){
+      answ =aibot_res[,c('FQues','FAnsw')]
+    }else{
+      answ='内部支持'
+    }
+
+  }
+
+  res=list(type,answ)
+  names(res) =c('type','answ')
+  return(res)
+}
+
 
 
 

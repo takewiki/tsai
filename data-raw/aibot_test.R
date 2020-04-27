@@ -22,5 +22,8 @@ res3 <- ai(keyword = '发现多少钱',n = 3,low = 0.6,high = 0.8,detail = T
 )
 print(res3)
 
+tip <- ai_tip('发现神行什么配置',4)
+print(tip)
+
 
 
