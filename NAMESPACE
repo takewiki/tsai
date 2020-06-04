@@ -2,7 +2,11 @@
 
 export(ai)
 export(ai2)
+export(ai2_env)
+export(ai_env)
 export(ai_tip)
+export(ai_tip_env)
 export(aibot)
 export(aibot_answer_type)
+export(aibot_env)
 import(reticulate)
