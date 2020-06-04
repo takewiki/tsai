@@ -43,7 +43,33 @@ aibot_as_df <-function(data){
 aibot <- function(keyword='发现神行多少钱',
                   n=3,
                   python="/usr/local/bin/python3"){
-  use_python(python,required = T);
+  #use_python(python,required = T);
+  use_virtualenv('/opt/my_env',required = TRUE)
+  rdlaiye <- import("rdlaiye")
+  res <-rdlaiye$api$aibot$query(keyword)
+  ncount <- length(res)
+  if(ncount >=n){
+    ncount <- n
+  }
+  res <- head(res,ncount)
+  res <- aibot_as_df(res)
+  return(res)
+
+}
+
+
+#' 增加机器人查询测试env
+#'
+#' @param keyword 查看词
+#' @param n  数量
+#'
+#' @return 返回值
+#'
+#' @examples
+#' aibot_env()
+aibot_env <- function(keyword='发现神行多少钱',
+                  n=3){
+  use_virtualenv('/opt/my_env',required = TRUE)
   rdlaiye <- import("rdlaiye")
   res <-rdlaiye$api$aibot$query(keyword)
   ncount <- length(res)
@@ -129,6 +155,49 @@ ai<- function(keyword,n=3,low=0.6,high=0.9,detail=FALSE){
   return(res)
 }
 
+
+
+#' 增加对env的支持
+#'
+#' @param keyword 关键词
+#' @param n  数量
+#' @param low 最小值
+#' @param high 最大值
+#' @param detail 明细
+#'
+#' @return 返回值
+#'
+#' @examples
+#' ai_env()
+ai_env<- function(keyword,n=3,low=0.6,high=0.9,detail=FALSE){
+  aibot_res <- aibot_env(keyword,n)
+  type <- aibot_answer_type(aibot_res,min = low,high = high)
+
+  if(detail){
+    if(type =='A'){
+      answ = aibot_res$FAnsw[1]
+    }else if(type=='B'){
+      answ =aibot_res
+    }else{
+      answ='内部支持'
+    }
+
+  }else{
+    if(type =='A'){
+      answ = aibot_res$FAnsw[1]
+    }else if(type=='B'){
+      answ =aibot_res[,c('FQues','FAnsw')]
+    }else{
+      answ='内部支持'
+    }
+
+  }
+
+  res=list(type,answ)
+  names(res) =c('type','answ')
+  return(res)
+}
+
 #' 增加提示问题
 #'
 #' @param keyword 关键词
@@ -141,6 +210,23 @@ ai<- function(keyword,n=3,low=0.6,high=0.9,detail=FALSE){
 #' ai_tip
 ai_tip <- function(keyword,n=3){
   res <- aibot(keyword,n)
+  res <- res$FQues
+  return(res)
+}
+
+
+
+#' 提供针对env环境的支持
+#'
+#' @param keyword 关键词
+#' @param n 数量
+#'
+#' @return 返回值
+#'
+#' @examples
+#' ai_tip_env()
+ai_tip_env <- function(keyword,n=3){
+  res <- aibot_env(keyword,n)
   res <- res$FQues
   return(res)
 }
@@ -188,6 +274,46 @@ ai2<- function(keyword,n=3,low=0.6,high=0.9,detail=TRUE){
   return(res)
 }
 
+
+
+#' 针对对虚拟环境的支持
+#'
+#' @param keyword  关键词
+#' @param n 数量
+#' @param low 最小
+#' @param high 最大
+#' @param detail 明细
+#'
+#' @return 返回值
+#'
+#' @examples
+#' ai2_env()
+ai2_env<- function(keyword,n=3,low=0.6,high=0.9,detail=TRUE){
+  aibot_res <- aibot_env(keyword,n)
+  type <- aibot_answer_type(aibot_res,min = low,high = high)
+
+  if(detail){
+
+    answ =aibot_res
+    print(nrow(answ))
+    answ$FIndex <-1:nrow(answ)
+
+
+  }else{
+    if(type =='A'){
+      answ = aibot_res$FAnsw[1]
+    }else if(type=='B'){
+      answ =aibot_res[,c('FQues','FAnsw')]
+    }else{
+      answ='内部支持'
+    }
+
+  }
+
+  res=list(type,answ)
+  names(res) =c('type','answ')
+  return(res)
+}
 
 
 
