@@ -44,7 +44,8 @@ aibot <- function(keyword='发现神行多少钱',
                   n=3,
                   python="/usr/local/bin/python3"){
   #use_python(python,required = T);
-  use_virtualenv('/opt/my_env',required = TRUE)
+  #use_virtualenv('/opt/my_env',required = TRUE)
+  tsda::set_py()
   rdlaiye <- import("rdlaiye")
   res <-rdlaiye$api$aibot$query(keyword)
   ncount <- length(res)
