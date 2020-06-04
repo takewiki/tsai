@@ -5,6 +5,8 @@
 \title{增加机器人查询测试env}
 \usage{
 aibot_env(keyword = "发现神行多少钱", n = 3)
+
+aibot_env(keyword = "发现神行多少钱", n = 3)
 }
 \arguments{
 \item{keyword}{查看词}
@@ -13,10 +15,15 @@ aibot_env(keyword = "发现神行多少钱", n = 3)
 }
 \value{
 返回值
+
+返回值
 }
 \description{
 增加机器人查询测试env
+
+增加机器人查询
 }
 \examples{
+aibot_env()
 aibot_env()
 }

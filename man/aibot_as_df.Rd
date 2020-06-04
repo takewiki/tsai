@@ -2,7 +2,7 @@
 % Please edit documentation in R/aibot.R
 \name{aibot_as_df}
 \alias{aibot_as_df}
-\title{针对查询结果格式化为DF}
+\title{针对查询结果格式化为DF2}
 \usage{
 aibot_as_df(data)
 }
@@ -13,7 +13,7 @@ aibot_as_df(data)
 返回数据框
 }
 \description{
-针对查询结果格式化为DF
+针对查询结果格式化为DF2
 }
 \examples{
 aibot_as_df(letters)

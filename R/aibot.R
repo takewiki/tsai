@@ -82,6 +82,32 @@ aibot_env <- function(keyword='发现神行多少钱',
 
 }
 
+
+#' 增加机器人查询
+#'
+#' @param keyword 查看词
+#' @param n  数量
+#'
+#' @return 返回值
+#' @export
+#'
+#' @examples
+#' aibot_env()
+aibot_env <- function(keyword='发现神行多少钱',
+                  n=3){
+  use_virtualenv('/opt/my_env',required = TRUE)
+  rdlaiye <- import("rdlaiye")
+  res <-rdlaiye$api$aibot$query(keyword)
+  ncount <- length(res)
+  if(ncount >=n){
+    ncount <- n
+  }
+  res <- head(res,ncount)
+  res <- aibot_as_df(res)
+  return(res)
+
+}
+
 #'增加答案的回复类型
 #'
 #' @param aibot_res 原始答案
